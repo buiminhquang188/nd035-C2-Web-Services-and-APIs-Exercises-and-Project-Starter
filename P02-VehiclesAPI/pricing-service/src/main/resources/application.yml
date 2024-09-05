@@ -1,0 +1,15 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: pricing-service
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      default-zone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: false
+    appname: pricing-service
+    instance-id: ${spring.application.name}:${server.port}
