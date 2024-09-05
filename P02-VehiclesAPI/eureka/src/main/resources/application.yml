@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: eureka-server
+  cloud:
+    config:
+      import-check:
+        enabled: false
+server:
+  port: 8761
+
+# Avoiding registering itself as client
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+logging:
+  level:
+    com:
+      netflix:
+        eureka: TRACE
+        discovery: TRACE
