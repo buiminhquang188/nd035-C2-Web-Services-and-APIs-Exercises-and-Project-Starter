@@ -28,7 +28,7 @@ public class PricingController {
      */
     @GetMapping("prices/{id}")
     public ResponseEntity<?> getPrice(@PathVariable Integer id) {
-        Optional<Price> optionalPrice = priceRepository.findById(id);
+        Optional<Price> optionalPrice = this.priceRepository.findByVehicleId(id);
         Price price = optionalPrice.orElseThrow(() -> new PriceException("Cannot find price for Vehicle " + id));
         return ResponseEntity.ok(price);
     }
