@@ -1,6 +1,5 @@
 package com.udacity.vehicles.service.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.udacity.vehicles.client.maps.MapsClient;
 import com.udacity.vehicles.client.prices.PriceClient;
 import com.udacity.vehicles.domain.Location;
@@ -10,7 +9,6 @@ import com.udacity.vehicles.domain.manufacturer.Manufacturer;
 import com.udacity.vehicles.exception.CarNotFoundException;
 import com.udacity.vehicles.service.CarService;
 import com.udacity.vehicles.service.ManufacturerService;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,13 +20,18 @@ import java.util.Optional;
  * location and price data when desired.
  */
 @Service
-@AllArgsConstructor
 public class CarServiceImpl implements CarService {
     private final CarRepository carRepository;
     private final ManufacturerService manufacturerService;
     private final PriceClient priceClient;
     private final MapsClient mapsClient;
-    private final ObjectMapper objectMapper;
+
+    public CarServiceImpl(CarRepository carRepository, ManufacturerService manufacturerService, PriceClient priceClient, MapsClient mapsClient) {
+        this.carRepository = carRepository;
+        this.manufacturerService = manufacturerService;
+        this.priceClient = priceClient;
+        this.mapsClient = mapsClient;
+    }
 
     /**
      * Gathers a list of all vehicles
@@ -53,15 +56,11 @@ public class CarServiceImpl implements CarService {
         String price = this.priceClient.getPrice(car.getId());
         car.setPrice(price);
 
-        Location location = this.mapsClient.getAddress(
-                Location.builder()
-                        .lat(car.getLocation()
-                                .getLat())
-                        .lon(car.getLocation()
-                                .getLon())
-                        .build()
-        );
-        car.setLocation(location);
+        Location location = new Location(car.getLocation()
+                .getLat(), car.getLocation()
+                .getLon());
+        Location address = this.mapsClient.getAddress(location);
+        car.setLocation(address);
 
         return car;
     }
