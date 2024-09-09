@@ -83,6 +83,20 @@ public class CarServiceImpl implements CarService {
             return this.carRepository.findById(car.getId())
                     .map(carToBeUpdated -> {
                         carToBeUpdated.setDetails(car.getDetails());
+
+                        if (car.getLocation()
+                                    .getLat()
+                                    .doubleValue() == carToBeUpdated.getLocation()
+                                    .getLat()
+                                    .doubleValue() && car.getLocation()
+                                                              .getLon()
+                                                              .doubleValue() == carToBeUpdated.getLocation()
+                                                              .getLon()
+                                                              .doubleValue()) {
+                            Location location = this.mapsClient.getAddress(car.getLocation());
+                            car.setLocation(location);
+                        }
+
                         carToBeUpdated.setLocation(car.getLocation());
                         return this.carRepository.save(carToBeUpdated);
                     })
