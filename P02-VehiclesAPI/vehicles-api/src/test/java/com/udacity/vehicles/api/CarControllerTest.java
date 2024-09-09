@@ -7,7 +7,6 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -18,7 +17,7 @@ import com.udacity.vehicles.domain.Location;
 import com.udacity.vehicles.domain.car.Car;
 import com.udacity.vehicles.domain.car.Details;
 import com.udacity.vehicles.domain.manufacturer.Manufacturer;
-import com.udacity.vehicles.service.CarService;
+import com.udacity.vehicles.service.impl.CarServiceImpl;
 import java.net.URI;
 import java.util.Collections;
 import org.junit.Before;
@@ -50,7 +49,7 @@ public class CarControllerTest {
     private JacksonTester<Car> json;
 
     @MockBean
-    private CarService carService;
+    private CarServiceImpl carService;
 
     @MockBean
     private PriceClient priceClient;
