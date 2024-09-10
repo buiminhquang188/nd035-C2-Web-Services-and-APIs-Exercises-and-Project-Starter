@@ -12,7 +12,6 @@ import javax.validation.constraints.NotNull;
  */
 @Embeddable
 public class Location {
-
     @NotNull
     private Double lat;
 

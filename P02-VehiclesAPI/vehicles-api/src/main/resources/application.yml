@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: vehicle-service
+  h2:
+    console:
+      path: /h2
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:vehicledata
+pricing:
+  endpoint: http://localhost:8082
+maps:
+  endpoint: http://localhost:9191
