@@ -62,7 +62,12 @@ public class CarControllerTest {
     public void setup() {
         Car car = getCar();
         car.setId(1L);
+
+        Location location = this.getLocation(car);
+
         given(carService.save(any())).willReturn(car);
+        given(this.priceClient.getPrice(car.getId())).willReturn("USD 11557.61");
+        given(this.mapsClient.getAddress(car.getLocation())).willReturn(location);
         given(carService.findById(any())).willReturn(car);
         given(carService.list()).willReturn(Collections.singletonList(car));
     }
@@ -159,5 +164,18 @@ public class CarControllerTest {
         car.setDetails(details);
         car.setCondition(Condition.USED);
         return car;
+    }
+
+    private Location getLocation(Car car) {
+        Location location = new Location(car.getLocation()
+                .getLat(), car.getLocation()
+                .getLon());
+
+        location.setAddress("43 Stephenville St");
+        location.setCity("Massena");
+        location.setState("NY");
+        location.setZip("13662");
+
+        return location;
     }
 }
